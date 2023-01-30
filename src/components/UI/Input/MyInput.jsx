@@ -5,7 +5,7 @@ const MyInput = (props) => {
   return (
     <div>
       <label className="label" htmlFor="input">{props.label}</label>
-      <input type= "checkbox" name="input" className="my-input" {...props} />
+      <input type= {props.type} name="input" className="my-input" {...props} />
     </div>
   );
 };

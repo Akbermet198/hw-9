@@ -6,7 +6,7 @@ import PostForm from "./components/PostForm/PostForm";
 const data = [{ name: "Akbermet", id: "Akbermet" }];
 
 const toDoReducer = (state, action) => {
-  console.log("action", action);
+ 
   if (action.type === "value") {
     return {
       ...state,
@@ -27,13 +27,27 @@ const toDoReducer = (state, action) => {
       data: action.data,
     };
   }
+  if (action.type === "modal") {
+    return {
+      ...state,
+      modal: action.modal,
+    };
+  }
+  if (action.type === "edit") {
+    return {
+      ...state,
+      editValue: action.payload,
+    };
+  }
 };
 
 function App() {
   const [todoState, dispatchTodo] = useReducer(toDoReducer, {
     value: "",
+    editValue: "",
     isValid: false,
     data: data,
+    modal: false,
   });
 
   const toDoChangeHandler = (event) => {
@@ -54,7 +68,7 @@ function App() {
 
     dispatchTodo({ type: "add", payload: event.target.value, data: data });
 
-    console.log("todoState", todoState);
+    
   };
 
   return (
@@ -64,7 +78,7 @@ function App() {
         toDoChangeHandler={toDoChangeHandler}
         addTodoItem={addTodoItem}
       />
-      <PostList data={todoState.data} dispatchTodo={dispatchTodo} />
+      <PostList todoState={todoState} dispatchTodo={dispatchTodo} />
     </div>
   );
 }
